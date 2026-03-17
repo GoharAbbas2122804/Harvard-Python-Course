@@ -34,7 +34,7 @@ def convert_frame_to_ascii(frame, width=80):
 
 def play_video_in_terminal(video_path, width=80, fps=30):
     """
-    Play Ser Harwin Strong a video in the terminal using ASCII characters
+    Play a video in the terminal using ASCII characters
     """
     if not os.path.exists(video_path):
         print(f"Error: Video file '{video_path}' not found.")
@@ -65,17 +65,31 @@ def play_video_in_terminal(video_path, width=80, fps=30):
         cap.release()
 
 if __name__ == "__main__":
-
-    video_path = input("Enter the path to the video file: ").strip()
+    print("=" * 50)
+    print("ASCII Video Player")
+    print("=" * 50)
+    print("This program converts videos to ASCII art!")
+    print()
+    
+    video_path = input("Enter the path to the video file (default: vid.mp4): ").strip()
+    if not video_path:
+        video_path = "vid.mp4"
     
     try:
-        width = int(input("Enter terminal width (default 80): ") or "80")
+        width_input = input("Enter terminal width (default 80): ").strip()
+        width = int(width_input) if width_input else 80
     except ValueError:
+        print("Invalid width. Using default: 80")
         width = 80
 
     try:
-        fps = int(input("Enter FPS (default: use video FPS): ") or "0")
+        fps_input = input("Enter FPS (default: use video FPS): ").strip()
+        fps = int(fps_input) if fps_input else 0
     except ValueError:
+        print("Invalid FPS. Using video's original FPS.")
         fps = 0
+    
+    print("\nStarting playback... (Press Ctrl+C to stop)\n")
+    time.sleep(1)
     
     play_video_in_terminal(video_path, width, fps)
